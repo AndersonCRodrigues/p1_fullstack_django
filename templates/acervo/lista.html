@@ -11,6 +11,7 @@
         {% for livro in livros %}
             <li class="livro-item">
                 <span>{{ livro.titulo }} - {{ livro.autor }} - {{ livro.ano }}</span>
+                <span>{{ livro.tipo }} - {{ livro.categoria }}</span>
                 <form method="post" action="{% url 'toggle_disponivel' livro.pk %}" class="livro-form">
                     {% csrf_token %} 
                     <button type="submit" class="toggle"> 
