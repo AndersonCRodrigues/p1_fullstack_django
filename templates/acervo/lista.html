@@ -8,7 +8,7 @@
     <a href="{% url 'novo_livro' %}">Adicionar livro</a>
 
     <form method="get">
-        <input type="text" name="q" placeholder="Buscar livro por título ou autor..."
+        <input type="text" name="q" placeholder="Buscar livro por título, tipo ou categoria..."
             value="{{ request.GET.q|default:'' }}" autocomplete="off">
         <button type="submit">Buscar</button>
         {% if request.GET.q %}
@@ -20,9 +20,10 @@
 
     <ul>
         {% for livro in livros %}
-            {% if not request.GET.q or request.GET.q in livro.titulo or request.GET.q in livro.autor %}
             <li class="livro-item">
-                {{ livro.titulo }} - {{ livro.autor }} - {{ livro.ano }} {{ livro.tipo }} - {{ livro.categoria }}
+                {{ livro.titulo }} - {{ livro.autor }} - {{ livro.ano }} | 
+                {{ livro.get_tipo_display }} - {{ livro.get_categoria_display }}
+                
                 <form method="post" action="{% url 'toggle_disponivel' livro.pk %}" class="livro-form">
                     {% csrf_token %} 
                     <button type="submit" class="toggle"> 
@@ -30,7 +31,6 @@
                     </button> 
                 </form>
             </li>
-            {% endif %}
         {% empty %}
             <li>Nenhum livro cadastrado.</li>
         {% endfor %}
