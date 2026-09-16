@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 
 from .forms import LivroForm
 from .models import Livro
@@ -25,3 +25,9 @@ def novo_livro(request):
         form = LivroForm()
 
     return render(request, "acervo/form.html", {"form": form})
+
+def update_disponivel(request, pk):
+    livro = get_object_or_404(Livro, pk=pk)
+    livro.disponivel = not livro.disponivel
+    livro.save()
+    return redirect("lista")
