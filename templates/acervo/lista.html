@@ -9,9 +9,18 @@
 
     <ul>
         {% for livro in livros %}
-            <li>{{ livro.titulo }} — {{ livro.autor }}</li>
+            <li class="livro-item">
+                <span>{{ livro.titulo }} - {{ livro.autor }} - {{ livro.ano }}</span>
+                <form method="post" action="{% url 'toggle_disponivel' livro.pk %}" class="livro-form">
+                    {% csrf_token %} 
+                    <button type="submit" class="toggle"> 
+                        {% if livro.disponivel %}Reservar{% else %}Entregar{% endif %} 
+                    </button> 
+                </form>
+            </li>
         {% empty %}
             <li>Nenhum livro cadastrado.</li>
         {% endfor %}
     </ul>
+    
 {% endblock %}
