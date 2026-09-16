@@ -1,4 +1,3 @@
-  cat > README.md <<'EOF'
 # Biblioteca
 
 Aplicação Django para gerenciamento de um acervo de livros (cadastro e listagem),
