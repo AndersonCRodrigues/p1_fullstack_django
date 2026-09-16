@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Acervo{% endblock %}
+
+{% block content %}
+    <h1>Acervo</h1>
+
+    <a href="{% url 'novo_livro' %}">Adicionar livro</a>
+
+    <ul>
+        {% for livro in livros %}
+            <li>{{ livro.titulo }} — {{ livro.autor }}</li>
+        {% empty %}
+            <li>Nenhum livro cadastrado.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
