@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
+from django.db.models import Q
 
 from .forms import LivroForm
 from .models import Livro
@@ -10,8 +11,16 @@ def inicio(request):
 
 
 def lista_livros(request):
-    livros = Livro.objects.all()
-    return render(request, "acervo/lista.html", {"livros": livros})
+  query = request.GET.get('q', '')
+  livros = Livro.objects.all()
+
+  if query:
+    livros = livros.filter(
+        Q(titulo__icontains=query)
+        | Q(tipo__icontains=query)
+        | Q(categoria__icontains=query)
+    )
+  return render(request, 'acervo/lista.html', {'livros': livros})
 
 
 def novo_livro(request):
